@@ -1,5 +1,5 @@
 # Proyek Analisis Data: E-Commerce Public Dataset 📦
-Selamat datang di repositori Proyek Analisis Data E-Commerce. Proyek ini merupakan bagian dari submission kelas Dicoding "Belajar Fundamental Analisis Data". Proyek ini bertujuan untuk melakukan analisis mendalam terhadap dataset E-Commerce (Olist) dan menyajikan hasilnya dalam sebuah dasbor interaktif menggunakan Streamlit.
+Selamat datang di repositori Proyek Analisis Data E-Commerce. Proyek ini merupakan bagian dari submission kelas Dicoding "Belajar Fundamental Analisis Data". Proyek ini bertujuan untuk melakukan analisis mendalam terhadap dataset E-Commerce dan menyajikan hasilnya dalam sebuah dasbor interaktif menggunakan Streamlit.
 
 ## 📊 Dashboard Demo
 Visualisasi dapat dilihat secara langsung di: [Streamlit App](https://dbs-coding-camp-binara.streamlit.app/)
@@ -8,7 +8,7 @@ Visualisasi dapat dilihat secara langsung di: [Streamlit App](https://dbs-coding
 
 ## 📜 Latar Belakang
 
-Dataset ini berisi informasi mengenai pesanan yang dibuat di Olist Store, marketplace terbesar di Brasil. Data ini mencakup berbagai aspek mulai dari informasi pelanggan, lokasi geografis, hingga detail karakteristik produk. Analisis ini difokuskan pada pemetaan persebaran pelanggan untuk strategi pemasaran dan pengelompokan produk berdasarkan berat untuk efisiensi logistik.
+Dataset ini berisi informasi mengenai pesanan. Data ini mencakup berbagai aspek mulai dari informasi pelanggan, lokasi geografis, hingga detail karakteristik produk. Analisis ini difokuskan pada pemetaan persebaran pelanggan untuk strategi pemasaran dan pengelompokan produk berdasarkan berat untuk efisiensi logistik.
 
 ---
 
