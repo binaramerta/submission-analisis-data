@@ -12,6 +12,7 @@ def load_data():
     products_df = pd.read_csv("./data/products_dataset.csv")
     
     products_df['product_weight_g'] = products_df['product_weight_g'].fillna(products_df['product_weight_g'].median())
+    products_df['product_category_name'] = products_df['product_category_name'].fillna('unknown')
     
     bins = [0, 1000, 5000, np.inf]
     labels = ['Ringan (<1kg)', 'Sedang (1-5kg)', 'Berat (>5kg)']
@@ -34,16 +35,18 @@ st.markdown("Selamat datang di dashboard. Silakan pilih tab di bawah ini untuk m
 tab1, tab2 = st.tabs(["👥 Analisis Pelanggan", "📦 Analisis Produk"])
 
 with tab1:
-    st.subheader("Top 5 Negara Bagian dengan Pelanggan Terbanyak")
+    st.subheader("Negara Bagian dengan Pelanggan Terbanyak")
+    
+    top_n = st.slider("Geser untuk memilih jumlah negara bagian (Top N):", min_value=3, max_value=15, value=5)
     
     bystate_df = customers_df.groupby(by="customer_state").customer_id.nunique().reset_index()
     bystate_df.rename(columns={"customer_id": "customer_count"}, inplace=True)
-    bystate_df = bystate_df.sort_values(by="customer_count", ascending=False).head(5)
+    bystate_df = bystate_df.sort_values(by="customer_count", ascending=False).head(top_n)
     
     sns.set_style("white")
     fig, ax = plt.subplots(figsize=(10, 5))
-    colors_ = ["#1f77b4", "#D3D3D3", "#D3D3D3", "#D3D3D3", "#D3D3D3"]
-    avg_top5 = bystate_df['customer_count'].mean()
+    
+    colors_ = ["#1f77b4"] + ["#D3D3D3"] * (top_n - 1)
 
     sns.barplot(
         x="customer_count", 
@@ -57,7 +60,7 @@ with tab1:
         ax=ax
     )
     
-    ax.set_title("Persebaran Geografis Pelanggan (Top 5)", loc="center", fontsize=14, fontweight='bold')
+    ax.set_title(f"Persebaran Geografis Pelanggan (Top {top_n})", loc="center", fontsize=14, fontweight='bold')
     ax.set_ylabel(None)
     ax.set_xlabel("Jumlah Pelanggan")
     ax.grid(axis='x', linestyle='--', alpha=0.7)
@@ -70,12 +73,23 @@ with tab1:
 with tab2:
     st.subheader("Distribusi Produk Berdasarkan Kategori Berat")
     
-    weight_dist_df = products_df.groupby(by="weight_category", observed=True).product_id.nunique().reset_index()
+    semua_kategori = products_df['product_category_name'].unique().tolist()
+    kategori_pilihan = st.multiselect(
+        "Pilih Kategori Produk untuk dianalisis:",
+        options=semua_kategori,
+        default=['cama_mesa_banho', 'beleza_saude', 'esporte_lazer']
+    )
+    
+    if kategori_pilihan:
+        filtered_products_df = products_df[products_df['product_category_name'].isin(kategori_pilihan)]
+    else:
+        filtered_products_df = products_df
+
+    weight_dist_df = filtered_products_df.groupby(by="weight_category", observed=True).product_id.nunique().reset_index()
     weight_dist_df.rename(columns={"product_id": "product_count"}, inplace=True)
 
     sns.set_style("white")
     fig2, ax2 = plt.subplots(figsize=(10, 5))
-    avg_product = weight_dist_df['product_count'].mean()
 
     sns.barplot(
         x="weight_category", 
